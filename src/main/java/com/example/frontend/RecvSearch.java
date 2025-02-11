@@ -3,9 +3,8 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
-import java.nio.charset.StandardCharsets;
 
-public class Recv {
+public class RecvSearch {
 
     private final static String QUEUE_NAME = "hello";
 
@@ -16,6 +15,8 @@ public class Recv {
         Channel channel = connection.createChannel();
 
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        channel.queueBind(QUEUE_NAME, "SpotifyAppUserEvents", "search");
+
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
         channel.basicQos(1); // accept only one unack-ed message at a time (see below)
